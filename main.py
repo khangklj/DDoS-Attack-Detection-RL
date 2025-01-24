@@ -17,7 +17,7 @@ def main():
     parser.add_argument('--train_steps', type=int, default=10000, help='Number of training steps')
     parser.add_argument('--eval_freq', type=int, default=1000, help='Frequency of evaluation (in timesteps)')
     parser.add_argument('--is_save_plot', action='store_true', default=False, help='Save plots')
-    parser.add_argument('--save_model_dir', type=str, default='models', help='Directory to save the trained model')
+    parser.add_argument('--saved_model_dir', type=str, default='models', help='Directory to save the trained model')
 
     args = parser.parse_args()
 
