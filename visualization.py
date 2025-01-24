@@ -3,7 +3,16 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, accuracy_score
 
-def plot_evaluation_metrics(metrics: list[tuple[float, float, float]], is_save_plot=False):
+def plot_evaluation_metrics(metrics: list[tuple[float, float, float]], is_save_plot=False):   
+    """
+    Plots the evaluation metrics (precision, recall, and F1-score) over time.
+
+    Parameters:
+    - metrics (list of tuples): A list where each tuple contains three float values
+      representing precision, recall, and F1-score at a specific evaluation step.
+    - is_save_plot (bool, optional): If True, saves the plot as a PNG file in the 'logs'
+      directory. Defaults to False.
+    """
 
     precisions, recalls, f1_scores = zip(*metrics)
     precisions = list(precisions)
@@ -30,6 +39,14 @@ def plot_evaluation_metrics(metrics: list[tuple[float, float, float]], is_save_p
     plt.show()
 
 def plot_avg_rewards(avg_rewards: list, is_save_plot=False):
+    """
+    Plots the average evaluation reward over time.
+
+    Parameters:
+    - avg_rewards (list of float): A list of average evaluation rewards at each evaluation step.
+    - is_save_plot (bool, optional): If True, saves the plot as a PNG file in the 'logs' directory. Defaults to False.
+    """   
+    
     # Plotting the evaluation metrics
     plt.figure(figsize=(10, 5))
     plt.plot(avg_rewards, label='Average Evaluation Reward', color='blue')

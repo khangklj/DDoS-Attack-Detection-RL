@@ -6,6 +6,21 @@ from sklearn.metrics import confusion_matrix
 
 class NetworkTrafficEnv(gym.Env):
     def __init__(self, data):
+        """
+        Initializes the NetworkTrafficEnv environment.
+
+        Parameters:
+        - data (pandas.DataFrame): The dataset containing network traffic data.
+        
+        Attributes:
+        - data (pandas.DataFrame): The input dataset used by the environment.
+        - max_steps (int): The maximum number of steps allowed per episode.
+        - current_step (int): The current step in the episode.
+        - current_data (pandas.DataFrame or None): The current sampled data for the episode.
+        - action_space (gym.spaces.Discrete): The action space with two possible actions (0 = Attack, 1 = Normal).
+        - observation_space (gym.spaces.Box): The observation space representing feature vectors.
+        """
+
         super(NetworkTrafficEnv, self).__init__()
         
         self.data = data
@@ -19,13 +34,35 @@ class NetworkTrafficEnv(gym.Env):
         # Define observation space: feature vectors
         self.observation_space = spaces.Box(low=0, high=np.inf, shape=(data.shape[1]-1,), dtype=np.float32)
 
-    def reset(self):
+    def reset(self):        
+        """
+        Resets the environment to start a new episode.
+
+        The current data is randomly sampled from the input dataset and the current step is set to 0.
+        The features of the first sampled row are returned as the first observation.
+
+        Returns:
+        - obs (numpy.array): The features of the first sampled row.
+        """        
         # Sample random 100 rows from the DataFrame
         self.current_data = self.data.sample(n=1000, random_state=np.random.randint(0, 10000)).reset_index(drop=True)
         self.current_step = 0
         return self.current_data.iloc[self.current_step, :-1].values  # Return the features of the first sampled row
 
-    def step(self, action):
+    def step(self, action):        
+        """
+        Runs one step in the environment.
+
+        Parameters:
+        - action (int): The action to take (0 = Attack, 1 = Normal).
+
+        Returns:
+        - obs (numpy.array): The next observation.
+        - reward (float): The reward obtained by the action.
+        - done (bool): Whether the episode is done.
+        - info (dict): A dictionary containing additional information.
+        """
+        
         # Get the true class for the current observation
         true_class = self.current_data.iloc[self.current_step]['Class']
         
@@ -53,6 +90,15 @@ class NetworkTrafficEnv(gym.Env):
 # Custom callback for evaluation
 class EvalCallback(BaseCallback):
     def __init__(self, eval_env, eval_freq, verbose=0):
+        """
+        Initialize the evaluation callback.
+
+        Parameters:
+        - eval_env (gym.Env): The environment to evaluate the model on.
+        - eval_freq (int): The frequency of evaluation (in timesteps).
+        - verbose (int): The verbosity level (0 = no output, 1 = info, 2 = debug).
+        """
+        
         super(EvalCallback, self).__init__(verbose)
         self.eval_env = eval_env
         self.eval_freq = eval_freq
@@ -60,7 +106,19 @@ class EvalCallback(BaseCallback):
         self.cumulative_rewards = []
         self.eval_metrics = []
 
-    def _on_step(self):
+    def _on_step(self):        
+        """
+        Called after each step to evaluate the model.
+
+        Evaluates the model every eval_freq steps by running 10 episodes and calculating the average reward and evaluation metrics (precision, recall, F1-score).
+
+        Args:
+        - self: The evaluation callback object.
+
+        Returns:
+        - True: The evaluation is successful.
+        """
+        
         if self.n_calls % self.eval_freq == 0:
             # Evaluate the model
             cumulative_reward = 0

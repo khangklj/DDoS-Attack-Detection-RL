@@ -3,21 +3,20 @@ from sklearn.preprocessing import LabelEncoder
 
 SEPERATOR = "================="
 
-def preprocess(df):    
+def preprocess(df):   
     """
-    Preprocesses the given dataframe by performing the following operations:
-    1. Drops the unnecessary columns specified in drop_columns list.
-    2. Removes any rows containing inf or NaN values.
-    3. Removes any duplicate rows.
-    4. Encodes the 'Class' column into binary labels.
-    5. Encodes the 'Label' column into integer labels.
+    Preprocess the given DataFrame by dropping unnecessary columns, removing inf and NaN, removing duplicated rows, encoding Class column to 0 or 1, and encoding Label column to 0,1,2,... for each unique value of df.
 
-    Parameters:
-    - df (pandas.DataFrame): The dataframe to be preprocessed.
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The DataFrame to be preprocessed
 
-    Returns:
-    - binary_le_mapping (dict): A dictionary mapping the original 'Class' labels to their binary labels.
-    - multi_le_mapping (dict): A dictionary mapping the original 'Label' labels to their integer labels.
+    Returns
+    -------
+    tuple
+        A tuple of two dictionaries, where the first dictionary is a mapping of the Class column to 0 or 1, 
+        and the second dictionary is a mapping of the Label column to 0,1,2,... for each unique value of df.
     """
     drop_columns = [ # drop unnecessary columns
     "Unnamed: 0",
