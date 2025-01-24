@@ -48,10 +48,10 @@ def main():
     plot_evaluation_metrics(eval_callback.eval_metrics, is_save_plot=args.is_save_plot)    
 
     # Save the model
-    if not os.path.exists(args.save_model_dir):
-        os.makedirs(args.save_model_dir)
+    if not os.path.exists(args.saved_model_dir):
+        os.makedirs(args.saved_model_dir)
 
-    model.save(os.path.join(args.save_model_dir, 'ddos_model'))
+    model.save(os.path.join(args.saved_model_dir, 'ddos_model'))
 
 if __name__ == '__main__':
     main()
