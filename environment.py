@@ -44,7 +44,7 @@ class NetworkTrafficEnv(gym.Env):
         Returns:
         - obs (numpy.array): The features of the first sampled row.
         """        
-        # Sample random 100 rows from the DataFrame
+        # Sample random 1000 rows from the DataFrame
         self.current_data = self.data.sample(n=1000, random_state=np.random.randint(0, 10000)).reset_index(drop=True)
         self.current_step = 0
         return self.current_data.iloc[self.current_step, :-1].values  # Return the features of the first sampled row
