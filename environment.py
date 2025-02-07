@@ -17,7 +17,7 @@ class NetworkTrafficEnv(gym.Env):
         - max_steps (int): The maximum number of steps allowed per episode.
         - current_step (int): The current step in the episode.
         - current_data (pandas.DataFrame or None): The current sampled data for the episode.
-        - action_space (gym.spaces.Discrete): The action space with two possible actions (0 = Attack, 1 = Normal).
+        - action_space (gym.spaces.Discrete): The action space with two possible actions (0 = Block, 1 = Normal).
         - observation_space (gym.spaces.Box): The observation space representing feature vectors.
         """
 
@@ -28,7 +28,7 @@ class NetworkTrafficEnv(gym.Env):
         self.current_step = 0
         self.current_data = None  # Placeholder for the current sampled data
         
-        # Define action space: 0 = Attack, 1 = Normal
+        # Define action space: 0 = Block, 1 = Normal
         self.action_space = spaces.Discrete(2)
         
         # Define observation space: feature vectors
@@ -54,7 +54,7 @@ class NetworkTrafficEnv(gym.Env):
         Runs one step in the environment.
 
         Parameters:
-        - action (int): The action to take (0 = Attack, 1 = Normal).
+        - action (int): The action to take (0 = Block, 1 = Normal).
 
         Returns:
         - obs (numpy.array): The next observation.

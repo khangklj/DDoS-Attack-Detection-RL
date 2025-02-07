@@ -16,7 +16,7 @@ def main():
     parser.add_argument('--data', type=str, default='./data/cicddos2019_dataset.csv', help='Path to the dataset file')
     parser.add_argument('--train_steps', type=int, default=10000, help='Number of training steps')
     parser.add_argument('--eval_freq', type=int, default=1000, help='Frequency of evaluation (in timesteps)')
-    parser.add_argument('--is_save_plot', action='store_true', default=False, help='Save plots')
+    parser.add_argument('--save_plot', action='store_true', default=False, help='Save plots')
     parser.add_argument('--saved_model_dir', type=str, default='models', help='Directory to save the trained model')
 
     args = parser.parse_args()
@@ -42,10 +42,10 @@ def main():
     model.learn(total_timesteps=args.train_steps, callback=eval_callback)
 
     # Plot the average evaluation reward
-    plot_avg_rewards(eval_callback.average_rewards, is_save_plot=args.is_save_plot)
+    plot_avg_rewards(eval_callback.average_rewards, is_save_plot=args.save_plot)
 
     # Plot the evaluation metrics
-    plot_evaluation_metrics(eval_callback.eval_metrics, is_save_plot=args.is_save_plot)    
+    plot_evaluation_metrics(eval_callback.eval_metrics, is_save_plot=args.save_plot)    
 
     # Save the model
     if not os.path.exists(args.saved_model_dir):

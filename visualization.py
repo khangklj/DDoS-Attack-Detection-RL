@@ -48,7 +48,7 @@ def plot_avg_rewards(avg_rewards: list, is_save_plot=False):
     """   
     
     # Plotting the evaluation metrics
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(15, 6))
     plt.plot(avg_rewards, label='Average Evaluation Reward', color='blue')
     plt.xlabel('Evaluation Steps (every 1000 timesteps)')
     plt.ylabel('Average Reward')
